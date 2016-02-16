@@ -213,30 +213,6 @@ class DomainInfo(CommonResponseInfo):
         """:type : list[Group]"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
-class VmCustomParam(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.Name = str
-        """:type : str"""
-        self.Value = str
-        """:type : str"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class VmDetails(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.UID = str
-        """:type : str"""
-        self.CloudProviderFullName = str
-        """:type : str"""
-        self.VmCustomParams = {'list': VmCustomParam}
-        """:type : list[VmCustomParam]"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class VmCustomParams(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.VmCustomParam = VmCustomParam
-        """:type : VmCustomParam"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
 class ResourceAttribute(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
         self.Type = str
@@ -271,8 +247,8 @@ class ResourceInfo(CommonResponseInfo):
         """:type : bool"""
         self.Name = str
         """:type : str"""
-        self.VmDetails = VmDetails
-        """:type : VmDetails"""
+        self.UniqeIdentifier = str
+        """:type : str"""
         self.Permission = str
         """:type : str"""
         self.FullAddress = str
@@ -297,8 +273,6 @@ class ResourceInfo(CommonResponseInfo):
         """:type : ResourceLockInfo"""
         self.ResourceModelName = str
         """:type : str"""
-        self.UniqeIdentifier = str
-        """:type : str"""
         self.Description = str
         """:type : str"""
         self.Domains = {'list': Domain}
@@ -307,8 +281,6 @@ class ResourceInfo(CommonResponseInfo):
         """:type : list[object]"""
         self.ResourceAttributes = {'list': ResourceAttribute}
         """:type : list[ResourceAttribute]"""
-        self.VmDetails = {'list': VmCustomParams}
-        """:type : list[VmCustomParams]"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
 class ResourceLiveStatusInfo(CommonResponseInfo):
@@ -475,12 +447,6 @@ class RouteInfo(CommonResponseInfo):
         """:type : list[RouteAttributeInfo]"""
         self.Segments = {'list': RouteSegmentInfo}
         """:type : list[RouteSegmentInfo]"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class ReservationAppResource(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.Name = str
-        """:type : str"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
 class Connector(CommonResponseInfo):
@@ -693,17 +659,15 @@ class ServiceInstance(CommonResponseInfo):
 
 class ServiceAttribute(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
-        self.Name = str
-        """:type : str"""
-        self.DefaultValue = str
-        """:type : str"""
         self.IsRequired = bool
         """:type : bool"""
-        self.RestrictedValues = str
-        """:type : str"""
-        self.PossibleValues = str
+        self.DefaultValue = str
         """:type : str"""
         self.Type = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.PossibleValues = str
         """:type : str"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
@@ -781,12 +745,6 @@ class CreateReservationResponseInfo(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
         self.Reservation = ReservationShortInfo
         """:type : ReservationShortInfo"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class ReplaceWithResourceResponseInfo(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.RootResources = {'list': str}
-        """:type : list[str]"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
 class GetReservationsInRangeResponseInfo(CommonResponseInfo):
@@ -867,8 +825,6 @@ class ReservationDescriptionInfo(ReservationShortInfo):
         """:type : list[TopologyInstructionsInfo]"""
         self.TopologiesResourcesAttributeInfo = {'list': TopologiesResourcesAttributesInfo}
         """:type : list[TopologiesResourcesAttributesInfo]"""
-        self.Apps = {'list': ReservationAppResource}
-        """:type : list[ReservationAppResource]"""
         self.ActiveRoutesInfo = {'list': RouteInfo}
         """:type : list[RouteInfo]"""
         self.TopologiesReservedResources = {'list': TopologyReservedResourceInfo}
@@ -1028,12 +984,6 @@ class ReserveResourcesResponseInfo(CommonResponseInfo):
         """:type : list[ResourceConflictInfo]"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
-class AddAppToReservationResponseInfo(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.ReservedAppName = str
-        """:type : str"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
 class ReserveTopologyResponseInfo(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
         self.Conflicts = {'list': ResourceConflictInfo}
@@ -1099,20 +1049,10 @@ class LogonDomainInfo(CommonResponseInfo):
         """:type : str"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
-class LogonTokenInfo(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.Token = str
-        """:type : str"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
 class LogonResponseInfo(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
         self.Domain = LogonDomainInfo
         """:type : LogonDomainInfo"""
-        self.Token = LogonTokenInfo
-        """:type : LogonTokenInfo"""
-        self.User = UserInfo
-        """:type : UserInfo"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
 class CommandParameter(CommonResponseInfo):
@@ -1165,42 +1105,6 @@ class TopologyCommandListInfo(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
         self.Commands = {'list': TopologyCommandInfo}
         """:type : list[TopologyCommandInfo]"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class EnvironmentCommandListInfo(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.Commands = {'list': EnvironmentCommandInfo}
-        """:type : list[EnvironmentCommandInfo]"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class EnvironmentCommandParameter(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.Mandatory = bool
-        """:type : bool"""
-        self.Name = str
-        """:type : str"""
-        self.DefaultValue = str
-        """:type : str"""
-        self.EnumValues = str
-        """:type : str"""
-        self.DisplayName = str
-        """:type : str"""
-        self.Type = str
-        """:type : str"""
-        self.Description = str
-        """:type : str"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class EnvironmentCommandInfo(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.DisplayName = str
-        """:type : str"""
-        self.Name = str
-        """:type : str"""
-        self.Description = str
-        """:type : str"""
-        self.Parameters = {'list': EnvironmentCommandParameter}
-        """:type : list[EnvironmentCommandParameter]"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
 class FindResourceReservationInfo(CommonResponseInfo):
@@ -1405,50 +1309,6 @@ class AbstractTemplateShortInfo(CommonResponseInfo):
         """:type : str"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
-class AppDeploymentyInfo(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.VmUuid = str
-        """:type : str"""
-        self.CloudProviderResourceName = str
-        """:type : str"""
-        self.LogicalResourceName = str
-        """:type : str"""
-        self.VisualConnectors = {'list': AppVisualConnector}
-        """:type : list[AppVisualConnector]"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class AppVisualConnector(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.Alias = str
-        """:type : str"""
-        self.Target = str
-        """:type : str"""
-        self.Source = str
-        """:type : str"""
-        self.Attributes = {'list': AttributeValueInfo}
-        """:type : list[AttributeValueInfo]"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class NumericRange(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.Start = int
-        """:type : int"""
-        self.End = int
-        """:type : int"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class VlanPoolRangeNumericInfo(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.VlanRange = NumericRange
-        """:type : NumericRange"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class VlanPoolSingleNumericInfo(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.VlanId = int
-        """:type : int"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
 class CloudShellAPISession(CommonAPISession):
     def __init__(self, host, username='', password='', domain='', timezone='UTC', datetimeformat='MM/dd/yyyy HH:mm',
                  port=8029, uri='/ResourceManagerApiService/'):
@@ -1503,6 +1363,18 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: str
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'AddGroupsToDomain'), ('domainName', domainName), ('groupNames', groupNames), ('readOnly', readOnly)]))
+
+    def SetGroupDomainPermissions(self, domainName='', groupName='', viewOnly=False):
+        """
+            Set the permission level of a group in domain.
+
+            :param domainName: Specify the name of the domain.
+            :param groupName: Specify the group name.
+            :param viewOnly: Specify if the group should be have view only permissions.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'SetGroupDomainPermissions'), ('domainName', domainName), ('groupName', groupName), ('viewOnly', viewOnly)]))
 
     def AddNewDomain(self, domainName='', description=''):
         """
@@ -1564,6 +1436,17 @@ class CloudShellAPISession(CommonAPISession):
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'AddResourcesToDomain'), ('domainName', domainName), ('resourcesNames', resourcesNames), ('includeDecendants', includeDecendants)]))
 
+    def CopyDomainsResources(self, domainNameSources=[], domainNameDestination=''):
+        """
+            Copy resources from a list of source domains to a target domain.
+
+            :param domainNameSources: Specify the names of the source domains.
+            :param domainNameDestination: Specify the name of the target domain.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'CopyDomainsResources'), ('domainNameSources', domainNameSources), ('domainNameDestination', domainNameDestination)]))
+
     def AddResourcesToReservation(self, reservationId='', resourcesFullPath=[], shared=''):
         """
             Reserves resources to be locked.
@@ -1575,6 +1458,29 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: ReserveResourcesResponseInfo
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'AddResourcesToReservation'), ('reservationId', reservationId), ('resourcesFullPath', resourcesFullPath), ('shared', shared)]))
+
+    def GetReservationResourcesPositions(self, reservationId=''):
+        """
+            Retrieves the x/y coordinates for all resources in the reservation's diagram.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+
+            :rtype: ReservationDiagramLayoutResponseInfo
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'GetReservationResourcesPositions'), ('reservationId', reservationId)]))
+
+    def SetReservationResourcePosition(self, reservationId='', resourceFullName='', x=0, y=0):
+        """
+            Sets the location of a specified resource in the reservation diagram.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param resourceFullName: Specify the resource name. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: FolderName/ResourceName.
+            :param x: Specify the x coordinate of the resource's top left corner.
+            :param y: Specify the y coordinate of the resource's top left corner.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'SetReservationResourcePosition'), ('reservationId', reservationId), ('resourceFullName', resourceFullName), ('x', x), ('y', y)]))
 
     def AddRoutesToReservation(self, reservationId='', sourceResourcesFullPath=[], targetResourcesFullPath=[], mappingType='', maxHops=0, routeAlias='', isShared=''):
         """
@@ -1591,6 +1497,32 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: RouteInfo
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'AddRoutesToReservation'), ('reservationId', reservationId), ('sourceResourcesFullPath', sourceResourcesFullPath), ('targetResourcesFullPath', targetResourcesFullPath), ('mappingType', mappingType), ('maxHops', maxHops), ('routeAlias', routeAlias), ('isShared', isShared)]))
+
+    def GetRoutesSolution(self, reservationId='', sourceResourcesFullPath=[], targetResourcesFullPath=[], mappingType='', maxHops=0, isShared=''):
+        """
+            Calculates possible routes between the supplied endpoints and returns their details, without saving, connecting or modifying the reservation in any way.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param sourceResourcesFullPath: Specify a list of resource names. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: RootResourceName/ResourceName
+            :param targetResourcesFullPath: Specify a list of resource names. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: RootResourceName/ResourceName
+            :param mappingType: Specify bidirectional or unidirectional as the mapping type.
+            :param maxHops: Specify the maximum number or allowed hops.
+            :param isShared: Specify whether these routes are shared. Shared routes can be used in more than one reservation.
+
+            :rtype: EndPointConnectionInfo
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'GetRoutesSolution'), ('reservationId', reservationId), ('sourceResourcesFullPath', sourceResourcesFullPath), ('targetResourcesFullPath', targetResourcesFullPath), ('mappingType', mappingType), ('maxHops', maxHops), ('isShared', isShared)]))
+
+    def SetConnectorsInReservation(self, reservationId='', connectors=dict()):
+        """
+            Adds connectors between source and target or update existing ones.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param connectors: List of connectors to set in the reservation. For example: {['SourceResourceFullPath', 'TargetResourceFullPath', 'Direction', 'Alias';]}.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'SetConnectorsInReservation'), ('reservationId', reservationId), ('connectors', CommonAPIRequest.toContainer(connectors))]))
 
     def AddTopologiesToDomain(self, domainName='', topologyNames=[]):
         """
@@ -1637,63 +1569,6 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: str
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'AutoLoad'), ('resourceFullPath', resourceFullPath)]))
-
-    def AddAttributeRestrictedValues(self, addAttributeRestrictionRequests=dict()):
-        """
-            add attribute restrictions to family/model
-
-            :param addAttributeRestrictionRequests: Attribute restrictions to add. For example: {['FamilyName', 'ModelName', 'Alphabetic';]}.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'AddAttributeRestrictedValues'), ('addAttributeRestrictionRequests', CommonAPIRequest.toContainer(addAttributeRestrictionRequests))]))
-
-    def ArchiveDomain(self, domainName=''):
-        """
-            Archive a domain. All future reservation will be deleted.
-
-            :param domainName: Specify the name of the domain.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'ArchiveDomain'), ('domainName', domainName)]))
-
-    def AddAppToReservation(self, reservationId='', appName='', positionX=100, positionY=100):
-        """
-            Add app resource to existing reservation.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param appName: Specify the app template name.
-            :param positionX: Specify the x coordinate of the app's top left corner.
-            :param positionY: Specify the y coordinate of the app's top left corner.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'AddAppToReservation'), ('reservationId', reservationId), ('appName', appName), ('positionX', positionX), ('positionY', positionY)]))
-
-    def AddServiceToReservation(self, reservationId='', serviceName='', alias='', attributes=dict()):
-        """
-            Add service resource to existing reservation.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param serviceName: Specify the service name.
-            :param alias: Specify the service alias.
-            :param attributes: Specify a matrix of attributes and associated attribute values.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'AddServiceToReservation'), ('reservationId', reservationId), ('serviceName', serviceName), ('alias', alias), ('attributes', CommonAPIRequest.toContainer(attributes))]))
-
-    def CopyDomainsResources(self, domainNameSources=[], domainNameDestination=''):
-        """
-            Copy resources from a list of source domains to a target domain.
-
-            :param domainNameSources: Specify the names of the source domains.
-            :param domainNameDestination: Specify the name of the target domain.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'CopyDomainsResources'), ('domainNameSources', domainNameSources), ('domainNameDestination', domainNameDestination)]))
 
     def ClearAndResetConsole(self, reservationId='', resourceFullPath='', consolePortsFullPath=[], baudRate=''):
         """
@@ -1745,25 +1620,6 @@ class CloudShellAPISession(CommonAPISession):
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'CreateImmediateReservation'), ('reservationName', reservationName), ('owner', owner), ('durationInMinutes', durationInMinutes), ('notifyOnStart', notifyOnStart), ('notifyOnEnd', notifyOnEnd), ('notificationMinutesBeforeEnd', notificationMinutesBeforeEnd)]))
 
-    def CreateImmediateTopologyReservation(self, reservationName='', owner='', durationInMinutes=0, notifyOnStart=False, notifyOnEnd=False, notificationMinutesBeforeEnd=0, topologyFullPath='', globalInputs=dict(), requirementsInputs=dict(), additionalInfoInputs=dict()):
-        """
-            Defines a reservation to be started immediately.
-
-            :param reservationName: Specify the name of the reservation.
-            :param owner: Specify the user name of the reservation owner.
-            :param durationInMinutes: Specify the length of the reservation. (in minutes)
-            :param notifyOnStart: Indicate whether to notify the reservation owner when the reservation starts.
-            :param notifyOnEnd: Indicate whether to notify the reservation owner when the reservation ends.
-            :param notificationMinutesBeforeEnd: Indicate the number of minutes before the end of the reservation to send out a Notify On End alert to the reservation owner. (0 = disabled)
-            :param topologyFullPath: Specify the full topology name. Include the full path from the root to the topology, separated by slashes. For example: FolderName/Topologies/TopologyName.
-            :param globalInputs: Global inputs associated with the specified topology. For example: {['Input Name', 'Value';]}.
-            :param requirementsInputs: Requirements inputs associated with the specified topology. For example: {['Resource Name', 'Input Name', 'Value', 'AttributeType';]}, AttributeType can be one of the following: Attributes/Models/Quantity. 
-            :param additionalInfoInputs: Additional info inputs associated with the specified topology. For example: {['Resource Name', 'Input Name', 'Value';]}. 
-
-            :rtype: CreateReservationResponseInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'CreateImmediateReservation'), ('reservationName', reservationName), ('owner', owner), ('durationInMinutes', durationInMinutes), ('notifyOnStart', notifyOnStart), ('notifyOnEnd', notifyOnEnd), ('notificationMinutesBeforeEnd', notificationMinutesBeforeEnd), ('topologyFullPath', topologyFullPath), ('globalInputs', CommonAPIRequest.toContainer(globalInputs)), ('requirementsInputs', CommonAPIRequest.toContainer(requirementsInputs)), ('additionalInfoInputs', CommonAPIRequest.toContainer(additionalInfoInputs))]))
-
     def CreateReservation(self, reservationName='', owner='', startTime='', endTime='', notifyOnStart=False, notifyOnEnd=False, notificationMinutesBeforeEnd=0):
         """
             Defines a new reservation.
@@ -1779,26 +1635,6 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: CreateReservationResponseInfo
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'CreateReservation'), ('reservationName', reservationName), ('owner', owner), ('startTime', startTime), ('endTime', endTime), ('notifyOnStart', notifyOnStart), ('notifyOnEnd', notifyOnEnd), ('notificationMinutesBeforeEnd', notificationMinutesBeforeEnd)]))
-
-    def CreateTopologyReservation(self, reservationName='', owner='', startTime='', endTime='', notifyOnStart=False, notifyOnEnd=False, notificationMinutesBeforeEnd=0, topologyFullPath='', globalInputs=dict(), requirementsInputs=dict(), additionalInfoInputs=dict()):
-        """
-            Defines a new reservation.
-
-            :param reservationName: Specify the name of the reservation.
-            :param owner: Specify the user name of the reservation owner.
-            :param startTime: The start time of the reservation.
-            :param endTime: The end time of the reservation.
-            :param notifyOnStart: Indicate whether to notify the reservation owner when the reservation starts.
-            :param notifyOnEnd: Indicate whether to notify the reservation owner when the reservation ends.
-            :param notificationMinutesBeforeEnd: Indicate the number of minutes before the end of the reservation to send out a Notify On End alert to the reservation owner. (0 = disabled)
-            :param topologyFullPath: Specify the full topology name. Include the full path from the root to the topology, separated by slashes. For example: FolderName/Topologies/TopologyName.
-            :param globalInputs: Global inputs associated with the specified topology. For example: {['Input Name', 'Value';]}.
-            :param requirementsInputs: Requirements inputs associated with the specified topology. For example: {['Resource Name', 'Input Name', 'Value', 'AttributeType';]}, AttributeType can be one of the following: Attributes/Models/Quantity. 
-            :param additionalInfoInputs: Additional info inputs associated with the specified topology. For example: {['Resource Name', 'Input Name', 'Value';]}. 
-
-            :rtype: CreateReservationResponseInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'CreateReservation'), ('reservationName', reservationName), ('owner', owner), ('startTime', startTime), ('endTime', endTime), ('notifyOnStart', notifyOnStart), ('notifyOnEnd', notifyOnEnd), ('notificationMinutesBeforeEnd', notificationMinutesBeforeEnd), ('topologyFullPath', topologyFullPath), ('globalInputs', CommonAPIRequest.toContainer(globalInputs)), ('requirementsInputs', CommonAPIRequest.toContainer(requirementsInputs)), ('additionalInfoInputs', CommonAPIRequest.toContainer(additionalInfoInputs))]))
 
     def CreateResource(self, resourceFamily='', resourceModel='', resourceName='', resourceAddress='', folderFullPath='', parentResourceFullPath='', resourceDescription=''):
         """
@@ -1825,6 +1661,17 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: str
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'CreateResources'), ('resourceInfoDtos', CommonAPIRequest.toContainer(resourceInfoDtos))]))
+
+    def UpdateRouteAliasesInReservation(self, reservationId='', routeAliases=dict()):
+        """
+            Update route aliases in a reservation.
+
+            :param reservationId: Specifies the string that represents the reservation’s unique identifier.
+            :param routeAliases: Specify a matrix of route source, route target and alias. For example: {['SourceResourceFullName', 'TargetFullName','Alias';'SourceResourceFullName2', 'TargetFullName2','Alias2']}.
+
+            :rtype: EndPointConnectionInfo
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'UpdateRouteAliasesInReservation'), ('reservationId', reservationId), ('routeAliases', CommonAPIRequest.toContainer(routeAliases))]))
 
     def CreateRouteInReservation(self, reservationId='', sourceResourceFullPath='', targetResourceFullPath='', overrideActiveRoutes='', mappingType='', maxHops=0, routeAlias='', isShared=''):
         """
@@ -1952,26 +1799,6 @@ class CloudShellAPISession(CommonAPISession):
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'DisconnectRoutesInReservation'), ('reservationId', reservationId), ('endpoints', CommonAPIRequest.toContainer(endpoints))]))
 
-    def DecryptPassword(self, encryptedString=''):
-        """
-            Decrypt a password.
-
-            :param encryptedString: The encrypted string for decryption.
-
-            :rtype: AttributeValueInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'DecryptPassword'), ('encryptedString', encryptedString)]))
-
-    def DeleteResourceTemplate(self, resourceTemplateName=''):
-        """
-            Deletes a specific resource template.
-
-            :param resourceTemplateName: Specify the resource template name.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'DeleteResourceTemplate'), ('resourceTemplateName', resourceTemplateName)]))
-
     def EndReservation(self, reservationId='', unmap=''):
         """
             Ends the specified reservation and optionally, unlocks and releases all reservation resources.
@@ -2005,7 +1832,7 @@ class CloudShellAPISession(CommonAPISession):
 
     def EnqueueResourceCommand(self, reservationId='', resourceFullPath='', commandName='', parameterValues=[], printOutput=False):
         """
-            [Deprecated] Enqueues a command to be executed for the specified driver.
+            Enqueues a command to be executed for the specified driver.
 
             :param reservationId: Specify the string that represents the reservation’s unique identifier.
             :param resourceFullPath: Specify the resource name. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: FolderName/RouterA/Port1.
@@ -2019,7 +1846,7 @@ class CloudShellAPISession(CommonAPISession):
 
     def EnqueueServiceCommand(self, reservationId='', serviceAlias='', commandName='', parameterValues=[], printOutput=False):
         """
-            [Deprecated] Enqueues a command to be executed for the specified driver.
+            Enqueues a command to be executed for the specified driver.
 
             :param reservationId: Specify the string that represents the reservation’s unique identifier.
             :param serviceAlias: Specify the alias of the service. The service alias is its identifier in the environment context. It can be retrieved via the environment details API and is displayed visually on the diagram.
@@ -2033,7 +1860,7 @@ class CloudShellAPISession(CommonAPISession):
 
     def ExecuteResourceCommand(self, reservationId='', resourceFullPath='', commandName='', parameterValues=[], printOutput=False):
         """
-            [Deprecated] Executes a command for the specified driver.
+            Executes a command for the specified driver.
 
             :param reservationId: Specify the string that represents the reservation’s unique identifier.
             :param resourceFullPath: Specify the resource name. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: FolderName/RouterA/Port1.
@@ -2063,7 +1890,7 @@ class CloudShellAPISession(CommonAPISession):
 
     def EnqueueTopologyCommand(self, reservationId='', commandName='', parameterValues=[], printOutput=False):
         """
-            [Deprecated] Enqueues a command to be executed for the specified reservation.
+            Enqueues a command to be executed for the specified reservation.
 
             :param reservationId: Specify the string that represents the reservation’s unique identifier.
             :param commandName: Specify the name of the command.
@@ -2076,7 +1903,7 @@ class CloudShellAPISession(CommonAPISession):
 
     def ExecuteTopologyCommand(self, reservationId='', commandName='', parameterValues=[], printOutput=False):
         """
-            [Deprecated] Executes a command for the specified reservation.
+            Executes a command for the specified reservation.
 
             :param reservationId: Specify the string that represents the reservation’s unique identifier.
             :param commandName: Specify the name of the command.
@@ -2097,112 +1924,6 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: str
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'ExtendReservation'), ('reservationId', reservationId), ('minutesToAdd', minutesToAdd)]))
-
-    def ExportFamiliesAndModels(self):
-        """
-            Exports the resource families, models, attributes and structure configuration.
-
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'ExportFamiliesAndModels')]))
-
-    def ExecuteServiceCommand(self, reservationId='', serviceAlias='', commandName='', parameterValues=[], printOutput=False):
-        """
-            [Deprecated] Executes a command for the specified service driver.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param serviceAlias: Specify the alias of the service.
-            :param commandName: Specify the name of the command.
-            :param parameterValues: Specify the list of parameters values required for executing the command.
-            :param printOutput: Defines whether to print the command output in the reservation command output window.
-
-            :rtype: CommandExecutionCompletedResultInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteServiceCommand'), ('reservationId', reservationId), ('serviceAlias', serviceAlias), ('commandName', commandName), ('parameterValues', parameterValues), ('printOutput', printOutput)]))
-
-    def ExecuteDeployAppCommand(self, reservationId='', appName='', commandInputs=dict(), printOutput=False):
-        """
-            Executes deploy command for the specified app driver.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param appName: Specify the name of the app.
-            :param commandInputs: Specify a matrix of input names and values required for executing the command.
-            :param printOutput: Defines whether to print the command output in the reservation command output window.
-
-            :rtype: CommandExecutionCompletedResultInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteDeployAppCommand'), ('reservationId', reservationId), ('appName', appName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
-
-    def ExecuteInstallAppCommand(self, reservationId='', resourceName='', commandName='', commandInputs=dict(), printOutput=False):
-        """
-            Executes install command for the specified app driver or script.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param resourceName: Specify the name of the resource deployment command created.
-            :param commandName: Specify the name of the command.
-            :param commandInputs: Specify a matrix of input names and values required for executing the command.
-            :param printOutput: Defines whether to print the command output in the reservation command output window.
-
-            :rtype: CommandExecutionCompletedResultInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteInstallAppCommand'), ('reservationId', reservationId), ('resourceName', resourceName), ('commandName', commandName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
-
-    def EnqueueEnvironmentCommand(self, reservationId='', commandName='', commandInputs=dict(), printOutput=False):
-        """
-            Enqueues a command to be executed for the specified reservation.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param commandName: Specify the name of the command.
-            :param commandInputs: Specify a matrix of input names and values required for executing the command.
-            :param printOutput: Defines whether to print the command output in the reservation command output window.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'EnqueueEnvironmentCommand'), ('reservationId', reservationId), ('commandName', commandName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
-
-    def ExecuteEnvironmentCommand(self, reservationId='', commandName='', commandInputs=dict(), printOutput=False):
-        """
-            Executes a command for the specified reservation.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param commandName: Specify the name of the command.
-            :param commandInputs: Specify a matrix of input names and values required for executing the command.
-            :param printOutput: Defines whether to print the command output in the reservation command output window.
-
-            :rtype: CommandExecutionCompletedResultInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteEnvironmentCommand'), ('reservationId', reservationId), ('commandName', commandName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
-
-    def EnqueueCommand(self, reservationId='', targetName='', targetType='', commandName='', commandInputs=dict(), printOutput=False):
-        """
-            Enqueues a command to be executed for the specified target.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param targetName: Specify the name of the target according to the target type: for resources - specify the resouce's name, for services - the service's alias.
-            :param targetType: Specify the target type for command execution.
-            :param commandName: Specify the name of the command.
-            :param commandInputs: Specify a matrix of input names and values required for executing the command.
-            :param printOutput: Defines whether to print the command output in the reservation command output window.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'EnqueueCommand'), ('reservationId', reservationId), ('targetName', targetName), ('targetType', targetType), ('commandName', commandName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
-
-    def ExecuteCommand(self, reservationId='', targetName='', targetType='', commandName='', commandInputs=dict(), printOutput=False):
-        """
-            Executes a command for the specified target.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param targetName: Specify the name of the target according to the target type: for resources - specify the resouce's name, for services - the service's alias.
-            :param targetType: Specify the target type for command execution.
-            :param commandName: Specify the name of the command.
-            :param commandInputs: Specify a matrix of input names and values required for executing the command.
-            :param printOutput: Defines whether to print the command output in the reservation command output window.
-
-            :rtype: CommandExecutionCompletedResultInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteCommand'), ('reservationId', reservationId), ('targetName', targetName), ('targetType', targetType), ('commandName', commandName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
 
     def FindResources(self, resourceFamily='', resourceModel='', attributeValues=dict(), showAllDomains=False, resourceFullName='', exactName=True, includeSubResources=True, resourceAddress='', resourceUniqueIdentifier='', maxResults=500):
         """
@@ -2243,31 +1964,6 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: FindResourceListInfo
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'FindResourcesInTimeRange'), ('resourceFamily', resourceFamily), ('resourceModel', resourceModel), ('fromTime', fromTime), ('untilTime', untilTime), ('attributeValues', CommonAPIRequest.toContainer(attributeValues)), ('showAllDomains', showAllDomains), ('resourceFullName', resourceFullName), ('exactName', exactName), ('includeSubResources', includeSubResources), ('resourceAddress', resourceAddress), ('resourceUniqueIdentifier', resourceUniqueIdentifier), ('maxResults', maxResults)]))
-
-    def GetReservationResourcesPositions(self, reservationId=''):
-        """
-            Retrieves the x/y coordinates for all resources in the reservation's diagram.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-
-            :rtype: ReservationDiagramLayoutResponseInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetReservationResourcesPositions'), ('reservationId', reservationId)]))
-
-    def GetRoutesSolution(self, reservationId='', sourceResourcesFullPath=[], targetResourcesFullPath=[], mappingType='', maxHops=0, isShared=''):
-        """
-            Calculates possible routes between the supplied endpoints and returns their details, without saving, connecting or modifying the reservation in any way.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param sourceResourcesFullPath: Specify a list of resource names. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: RootResourceName/ResourceName
-            :param targetResourcesFullPath: Specify a list of resource names. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: RootResourceName/ResourceName
-            :param mappingType: Specify bidirectional or unidirectional as the mapping type.
-            :param maxHops: Specify the maximum number or allowed hops.
-            :param isShared: Specify whether these routes are shared. Shared routes can be used in more than one reservation.
-
-            :rtype: EndPointConnectionInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetRoutesSolution'), ('reservationId', reservationId), ('sourceResourcesFullPath', sourceResourcesFullPath), ('targetResourcesFullPath', targetResourcesFullPath), ('mappingType', mappingType), ('maxHops', maxHops), ('isShared', isShared)]))
 
     def GenerateUtilizationReport(self, resourceFamilyName='', fromDate='', toDate='', resourceFullName='', resourceModelName='', includeChildResources='', groupBy='', utilizationReportType=''):
         """
@@ -2554,7 +2250,7 @@ class CloudShellAPISession(CommonAPISession):
 
     def GetTopologyCommands(self, reservationId=''):
         """
-            [Deprecated] Retrieves driver commands and parameters for a specified reservation.
+            Retrieves driver commands and parameters for a specified reservation.
 
             :param reservationId: Specify the string that represents the reservation’s unique identifier.
 
@@ -2562,15 +2258,14 @@ class CloudShellAPISession(CommonAPISession):
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'GetTopologyCommands'), ('reservationId', reservationId)]))
 
-    def GetEnvironmentCommands(self, reservationId=''):
+    def ExportFamiliesAndModels(self):
         """
-            Retrieves driver commands and parameters for a specified reservation.
+            Exports the resource families, models, attributes and structure configuration.
 
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
 
-            :rtype: EnvironmentCommandListInfo
+            :rtype: str
         """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetEnvironmentCommands'), ('reservationId', reservationId)]))
+        return self.generateAPIRequest(OrderedDict([('method_name', 'ExportFamiliesAndModels')]))
 
     def GetTopologyDetails(self, topologyFullPath=''):
         """
@@ -2611,80 +2306,6 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: UserInfo
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'GetUserDetails'), ('username', username)]))
-
-    def GetAbstractTemplateList(self):
-        """
-            Retrieve a list of abstract templates.
-
-
-            :rtype: AbstractTemplateShortInfoList
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetAbstractTemplateList')]))
-
-    def GetServices(self, categoryName='', serviceName=''):
-        """
-            Retrieve a list of services and their attributes.
-
-            :param categoryName: The name of the category of the services you want to receive.
-            :param serviceName: The name of the service you want to receive.
-
-            :rtype: ServicesListInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetServices'), ('categoryName', categoryName), ('serviceName', serviceName)]))
-
-    def GetReservationServicesPositions(self, reservationId=''):
-        """
-            Retrieves the x/y coordinates for all services in the reservation's diagram.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-
-            :rtype: ReservationDiagramLayoutResponseInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetReservationServicesPositions'), ('reservationId', reservationId)]))
-
-    def GetVlanAutoSelectFirstNumericFromRange(self, poolId='', reservationId='', ownerId='', isolation='', start=0, end=0):
-        """
-            Request to get the first available numeric vlan from given range
-
-            :param poolId: Specify the name of the vlan pool id.
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param ownerId: Specify the owner id.
-            :param isolation: Specify the requested isolation level for the requested vlan.
-            :param start: Specify the requested vlan range start.
-            :param end: Specify the requested vlan range end.
-
-            :rtype: VlanPoolSingleNumericInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetVlanAutoSelectFirstNumericFromRange'), ('poolId', poolId), ('reservationId', reservationId), ('ownerId', ownerId), ('isolation', isolation), ('start', start), ('end', end)]))
-
-    def GetVlanSpecificNumericRange(self, poolId='', reservationId='', ownerId='', isolation='', start=0, end=0):
-        """
-            Request to get the specific numeric vlan range
-
-            :param poolId: Specify the name of the vlan pool id.
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param ownerId: Specify the owner id.
-            :param isolation: Specify the requested isolation level for the requested vlan.
-            :param start: Specify the requested vlan range start.
-            :param end: Specify the requested vlan range end.
-
-            :rtype: VlanPoolRangeNumericInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetVlanSpecificNumericRange'), ('poolId', poolId), ('reservationId', reservationId), ('ownerId', ownerId), ('isolation', isolation), ('start', start), ('end', end)]))
-
-    def GetVlanSpecificNumeric(self, poolId='', reservationId='', ownerId='', isolation='', specificValue=0):
-        """
-            Request to get a specific numeric vlan
-
-            :param poolId: Specify the name of the vlan pool id.
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param ownerId: Specify the owner id.
-            :param isolation: Specify the requested isolation level for the requested vlan.
-            :param specificValue: Specify the requested vlan.
-
-            :rtype: VlanPoolSingleNumericInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetVlanSpecificNumeric'), ('poolId', poolId), ('reservationId', reservationId), ('ownerId', ownerId), ('isolation', isolation), ('specificValue', specificValue)]))
 
     def IncludeResource(self, resourceFullPath=''):
         """
@@ -2810,16 +2431,6 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: CommandExecutionCompletedResultInfo
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'PowerOnResource'), ('reservationId', reservationId), ('resourceFullPath', resourceFullPath), ('powerPortsFullPath', powerPortsFullPath)]))
-
-    def RemoveAttributeRestrictedValues(self, removeAttributeRestrictionRequests=dict()):
-        """
-            remove attribute restrictions from family/model
-
-            :param removeAttributeRestrictionRequests: Attribute restrictions to remove".
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'RemoveAttributeRestrictedValues'), ('removeAttributeRestrictionRequests', CommonAPIRequest.toContainer(removeAttributeRestrictionRequests))]))
 
     def RecheckConflicts(self, reservationId=''):
         """
@@ -2986,28 +2597,6 @@ class CloudShellAPISession(CommonAPISession):
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'ResetResourceDriver'), ('reservationId', reservationId), ('resourceFullPath', resourceFullPath)]))
 
-    def RemoveAppFromReservation(self, reservationId='', appName=''):
-        """
-            Remove app resource to existing reservation.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param appName: Specify the app name.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'RemoveAppFromReservation'), ('reservationId', reservationId), ('appName', appName)]))
-
-    def RemoveServicesFromReservation(self, reservationId='', services=[]):
-        """
-            Remove services and apps from existing reservation.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param services: List of aliases. This list should contain the aliases for both the services and apps that should be removed.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'RemoveServicesFromReservation'), ('reservationId', reservationId), ('services', services)]))
-
     def SaveReservationAsTopology(self, reservationId='', folderFullPath='', topologyName='', includeInactiveRoutes=''):
         """
             Creates a topology from an existing reservation. Leave the folder path blank to save the topology directly under the root.
@@ -3020,17 +2609,6 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: TopologyInfo
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'SaveReservationAsTopology'), ('reservationId', reservationId), ('folderFullPath', folderFullPath), ('topologyName', topologyName), ('includeInactiveRoutes', includeInactiveRoutes)]))
-
-    def SecureLogon(self, token='', domainName='Global'):
-        """
-            Logs in a user with a token. If no domain is specified, this method logs the user in to the global (default) domain.
-
-            :param token: Token to logon with.
-            :param domainName: Specify the name of the domain. If no domain is specified, it logs the user in to the global (default) domain.
-
-            :rtype: LogonResponseInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'SecureLogon'), ('token', token), ('domainName', domainName)]))
 
     def SetAttributeValue(self, resourceFullPath='', attributeName='', attributeValue=''):
         """
@@ -3168,28 +2746,19 @@ class CloudShellAPISession(CommonAPISession):
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'SetConnectorAttributesViaAlias'), ('reservationId', reservationId), ('connectorAlias', connectorAlias), ('attributeRequests', CommonAPIRequest.toContainer(attributeRequests))]))
 
-    def SetGroupDomainPermissions(self, domainName='', groupName='', viewOnly=False):
+    def UpdateConnectorAliasInReservation(self, reservationId='', sourceResourceFullName='', targetResourceFullName='', direction='', alias=''):
         """
-            Set the permission level of a group in domain.
-
-            :param domainName: Specify the name of the domain.
-            :param groupName: Specify the group name.
-            :param viewOnly: Specify if the group should be have view only permissions.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'SetGroupDomainPermissions'), ('domainName', domainName), ('groupName', groupName), ('viewOnly', viewOnly)]))
-
-    def SetConnectorsInReservation(self, reservationId='', connectors=dict()):
-        """
-            Adds connectors between source and target or update existing ones.
+            Sets alias for a specified connector.
 
             :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param connectors: List of connectors to set in the reservation. For example: {['SourceResourceFullPath', 'TargetResourceFullPath', 'Direction', 'Alias';]}.
+            :param sourceResourceFullName: Specify the resource name. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: FolderName/RouterA/Port1.
+            :param targetResourceFullName: Specify the resource name. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: FolderName/RouterA/Port1.
+            :param direction: Specify bidirectional or unidirectional as the connector direction.
+            :param alias: Specify the connector’s alias.
 
             :rtype: str
         """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'SetConnectorsInReservation'), ('reservationId', reservationId), ('connectors', CommonAPIRequest.toContainer(connectors))]))
+        return self.generateAPIRequest(OrderedDict([('method_name', 'UpdateConnectorAliasInReservation'), ('reservationId', reservationId), ('sourceResourceFullName', sourceResourceFullName), ('targetResourceFullName', targetResourceFullName), ('direction', direction), ('alias', alias)]))
 
     def SetTopologyCategory(self, topologyFullPath='', categoryName='', categoryValue=''):
         """
@@ -3222,68 +2791,6 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: str
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'SyncResourceToDevice'), ('resourceFullPath', resourceFullPath)]))
-
-    def SetReservationResourcePosition(self, reservationId='', resourceFullName='', x=0, y=0):
-        """
-            Sets the location of a specified resource in the reservation diagram.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param resourceFullName: Specify the resource name. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: FolderName/ResourceName.
-            :param x: Specify the x coordinate of the resource's top left corner.
-            :param y: Specify the y coordinate of the resource's top left corner.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'SetReservationResourcePosition'), ('reservationId', reservationId), ('resourceFullName', resourceFullName), ('x', x), ('y', y)]))
-
-    def SetServiceDriver(self, serviceName='', driverName=''):
-        """
-            Sets the driver for a specified service model, if empty, removes its driver.
-
-            :param serviceName: Specify the name of the service model.
-            :param driverName: Specify the name of the driver.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'SetServiceDriver'), ('serviceName', serviceName), ('driverName', driverName)]))
-
-    def SetServiceLiveStatus(self, reservationId='', serviceAlias='', liveStatusName='', additionalInfo=''):
-        """
-            Sets the live status of a service
-
-            :param reservationId: Specify the string that represents the reservation's unique identifier.
-            :param serviceAlias: Specify the string that represents the service's alias.
-            :param liveStatusName: Resource live status name
-            :param additionalInfo: Resource live status additional info
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'SetServiceLiveStatus'), ('reservationId', reservationId), ('serviceAlias', serviceAlias), ('liveStatusName', liveStatusName), ('additionalInfo', additionalInfo)]))
-
-    def SetReservationServicePosition(self, reservationId='', serviceAlias='', x=0, y=0):
-        """
-            Sets the location of a specified service in the reservation diagram.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param serviceAlias: Specify the alias of the service.
-            :param x: Specify the x coordinate of the resource's top left corner.
-            :param y: Specify the y coordinate of the resource's top left corner.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'SetReservationServicePosition'), ('reservationId', reservationId), ('serviceAlias', serviceAlias), ('x', x), ('y', y)]))
-
-    def SetServiceAttributesValues(self, reservationId='', serviceAlias='', attributeRequests=dict()):
-        """
-            Sets attributes and associated values for a specified resource.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param serviceAlias: Specify the service name.
-            :param attributeRequests: Specify a matrix of attributes and associated attribute values.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'SetServiceAttributesValues'), ('reservationId', reservationId), ('serviceAlias', serviceAlias), ('attributeRequests', CommonAPIRequest.toContainer(attributeRequests))]))
 
     def TerminateReservation(self, reservationId=''):
         """
@@ -3328,20 +2835,6 @@ class CloudShellAPISession(CommonAPISession):
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'UnMapPorts'), ('portA', portA), ('portB', portB)]))
 
-    def UpdateConnectorAliasInReservation(self, reservationId='', sourceResourceFullName='', targetResourceFullName='', direction='', alias=''):
-        """
-            Sets alias for a specified connector.
-
-            :param reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param sourceResourceFullName: Specify the resource name. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: FolderName/RouterA/Port1.
-            :param targetResourceFullName: Specify the resource name. You can also include the full path from the root to the resource before the resource name, separated by slashes. For example: FolderName/RouterA/Port1.
-            :param direction: Specify bidirectional or unidirectional as the connector direction.
-            :param alias: Specify the connector’s alias.
-
-            :rtype: str
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'UpdateConnectorAliasInReservation'), ('reservationId', reservationId), ('sourceResourceFullName', sourceResourceFullName), ('targetResourceFullName', targetResourceFullName), ('direction', direction), ('alias', alias)]))
-
     def UpdateConnectionWeight(self, resourceAFullPath='', resourceBFullPath='', weight=0):
         """
             Sets a weight score on a physical connection between two resources. Weights are used to optimize route resolution in physical switch scenarios.
@@ -3364,6 +2857,16 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: str
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'UpdateDomainTopologiesFolder'), ('domainName', domainName), ('topologiesFolder', topologiesFolder)]))
+
+    def ArchiveDomain(self, domainName=''):
+        """
+            Archive a domain. All future reservation will be deleted.
+
+            :param domainName: Specify the name of the domain.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'ArchiveDomain'), ('domainName', domainName)]))
 
     def UnarchiveDomain(self, domainName=''):
         """
@@ -3532,16 +3035,122 @@ class CloudShellAPISession(CommonAPISession):
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'UpdateUserPassword'), ('username', username), ('password', password)]))
 
-    def UpdateRouteAliasesInReservation(self, reservationId='', routeAliases=dict()):
+    def GetAbstractTemplateList(self):
         """
-            Update route aliases in a reservation.
+            Retrieve a list of abstract templates.
 
-            :param reservationId: Specifies the string that represents the reservation’s unique identifier.
-            :param routeAliases: Specify a matrix of route source, route target and alias. For example: {['SourceResourceFullName', 'TargetFullName','Alias';'SourceResourceFullName2', 'TargetFullName2','Alias2']}.
 
-            :rtype: EndPointConnectionInfo
+            :rtype: AbstractTemplateShortInfoList
         """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'UpdateRouteAliasesInReservation'), ('reservationId', reservationId), ('routeAliases', CommonAPIRequest.toContainer(routeAliases))]))
+        return self.generateAPIRequest(OrderedDict([('method_name', 'GetAbstractTemplateList')]))
+
+    def GetServices(self, categoryName='', serviceName=''):
+        """
+            Retrieve a list of services and their attributes.
+
+            :param categoryName: The name of the category of the services you want to receive.
+            :param serviceName: The name of the service you want to receive.
+
+            :rtype: ServicesListInfo
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'GetServices'), ('categoryName', categoryName), ('serviceName', serviceName)]))
+
+    def SetServiceDriver(self, serviceName='', driverName=''):
+        """
+            Sets the driver for a specified service model, if empty, removes its driver.
+
+            :param serviceName: Specify the name of the service model.
+            :param driverName: Specify the name of the driver.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'SetServiceDriver'), ('serviceName', serviceName), ('driverName', driverName)]))
+
+    def AddServiceToReservation(self, reservationId='', serviceName='', alias='', attributes=dict()):
+        """
+            Add service resource to existing reservation.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param serviceName: Specify the service name.
+            :param alias: Specify the service alias.
+            :param attributes: Specify a matrix of attributes and associated attribute values.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'AddServiceToReservation'), ('reservationId', reservationId), ('serviceName', serviceName), ('alias', alias), ('attributes', CommonAPIRequest.toContainer(attributes))]))
+
+    def RemoveServicesFromReservation(self, reservationId='', services=[]):
+        """
+            Remove services and apps from existing reservation.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param services: List of aliases. This list should contain the aliases for both the services and apps that should be removed.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'RemoveServicesFromReservation'), ('reservationId', reservationId), ('services', services)]))
+
+    def SetServiceLiveStatus(self, reservationId='', serviceAlias='', liveStatusName='', additionalInfo=''):
+        """
+            Sets the live status of a service
+
+            :param reservationId: Specify the string that represents the reservation's unique identifier.
+            :param serviceAlias: Specify the string that represents the service's alias.
+            :param liveStatusName: Resource live status name
+            :param additionalInfo: Resource live status additional info
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'SetServiceLiveStatus'), ('reservationId', reservationId), ('serviceAlias', serviceAlias), ('liveStatusName', liveStatusName), ('additionalInfo', additionalInfo)]))
+
+    def SetReservationServicePosition(self, reservationId='', serviceAlias='', x=0, y=0):
+        """
+            Sets the location of a specified service in the reservation diagram.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param serviceAlias: Specify the alias of the service.
+            :param x: Specify the x coordinate of the resource's top left corner.
+            :param y: Specify the y coordinate of the resource's top left corner.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'SetReservationServicePosition'), ('reservationId', reservationId), ('serviceAlias', serviceAlias), ('x', x), ('y', y)]))
+
+    def GetReservationServicesPositions(self, reservationId=''):
+        """
+            Retrieves the x/y coordinates for all services in the reservation's diagram.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+
+            :rtype: ReservationDiagramLayoutResponseInfo
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'GetReservationServicesPositions'), ('reservationId', reservationId)]))
+
+    def ExecuteServiceCommand(self, reservationId='', serviceAlias='', commandName='', parameterValues=[], printOutput=False):
+        """
+            Executes a command for the specified service driver.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param serviceAlias: Specify the alias of the service.
+            :param commandName: Specify the name of the command.
+            :param parameterValues: Specify the list of parameters values required for executing the command.
+            :param printOutput: Defines whether to print the command output in the reservation command output window.
+
+            :rtype: CommandExecutionCompletedResultInfo
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteServiceCommand'), ('reservationId', reservationId), ('serviceAlias', serviceAlias), ('commandName', commandName), ('parameterValues', parameterValues), ('printOutput', printOutput)]))
+
+    def SetServiceAttributesValues(self, reservationId='', serviceAlias='', attributeRequests=dict()):
+        """
+            Sets attributes and associated values for a specified resource.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param serviceAlias: Specify the service name.
+            :param attributeRequests: Specify a matrix of attributes and associated attribute values.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'SetServiceAttributesValues'), ('reservationId', reservationId), ('serviceAlias', serviceAlias), ('attributeRequests', CommonAPIRequest.toContainer(attributeRequests))]))
 
     def WriteMessageToReservationOutput(self, reservationId='', message=''):
         """
@@ -3553,4 +3162,60 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: str
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'WriteMessageToReservationOutput'), ('reservationId', reservationId), ('message', message)]))
+
+    def EnqueueEnvironmentCommand(self, reservationId='', commandName='', commandInputs=dict(), printOutput=False):
+        """
+            Enqueues a command to be executed for the specified reservation.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param commandName: Specify the name of the command.
+            :param commandInputs: Specify a matrix of input names and values required for executing the command.
+            :param printOutput: Defines whether to print the command output in the reservation command output window.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'EnqueueEnvironmentCommand'), ('reservationId', reservationId), ('commandName', commandName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
+
+    def ExecuteEnvironmentCommand(self, reservationId='', commandName='', commandInputs=dict(), printOutput=False):
+        """
+            Executes a command for the specified reservation.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param commandName: Specify the name of the command.
+            :param commandInputs: Specify a matrix of input names and values required for executing the command.
+            :param printOutput: Defines whether to print the command output in the reservation command output window.
+
+            :rtype: CommandExecutionCompletedResultInfo
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteEnvironmentCommand'), ('reservationId', reservationId), ('commandName', commandName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
+
+    def EnqueueCommand(self, reservationId='', targetName='', targetType='', commandName='', commandInputs=dict(), printOutput=False):
+        """
+            Enqueues a command to be executed for the specified target.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param targetName: Specify the name of the target according to the target type: for resources - specify the resouce's name, for services - the service's alias.
+            :param targetType: Specify the target type for command execution.
+            :param commandName: Specify the name of the command.
+            :param commandInputs: Specify a matrix of input names and values required for executing the command.
+            :param printOutput: Defines whether to print the command output in the reservation command output window.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'EnqueueCommand'), ('reservationId', reservationId), ('targetName', targetName), ('targetType', targetType), ('commandName', commandName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
+
+    def ExecuteCommand(self, reservationId='', targetName='', targetType='', commandName='', commandInputs=dict(), printOutput=False):
+        """
+            Executes a command for the specified target.
+
+            :param reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param targetName: Specify the name of the target according to the target type: for resources - specify the resouce's name, for services - the service's alias.
+            :param targetType: Specify the target type for command execution.
+            :param commandName: Specify the name of the command.
+            :param commandInputs: Specify a matrix of input names and values required for executing the command.
+            :param printOutput: Defines whether to print the command output in the reservation command output window.
+
+            :rtype: CommandExecutionCompletedResultInfo
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteCommand'), ('reservationId', reservationId), ('targetName', targetName), ('targetType', targetType), ('commandName', commandName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
 
