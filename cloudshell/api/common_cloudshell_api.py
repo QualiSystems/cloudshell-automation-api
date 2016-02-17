@@ -1,6 +1,6 @@
 __author__ = 'g8y3e'
 
-from lxml import etree
+import xml.etree.ElementTree as etree
 import urllib2 as urllib23
 import importlib
 import types
@@ -45,13 +45,15 @@ class XMLWrapper:
 
     @staticmethod
     def getNodePrefix(node, prefix_name):
-        if node.nsmap is None:
-            return ''
+        prefix = ''
+        if len(node.attrib) == 0:
+            return prefix
+        for attrib_name, value in node.attrib.items():
+            if attrib_name[0] == "{":
+                prefix, ignore, tag = attrib_name[1:].partition("}")
+                return "{" + prefix + "}"
 
-        if prefix_name in node.nsmap:
-            return '{' + node.nsmap[prefix_name] + '}'
-        else:
-            return ''
+        return prefix
 
     @staticmethod
     def getStringFromXML(node, pretty_print=False):
