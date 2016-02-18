@@ -145,7 +145,1170 @@ class UserUpdateRequest(CommonAPIRequest):
         CommonAPIRequest.__init__(self, Username=Username, MaxConcurrentReservations=MaxConcurrentReservations,
                                   MaxReservationDuration=MaxReservationDuration)
 
-# begin response class
+class ResourceLockInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ReservationName = str
+        """:type : str"""
+        self.MachineName = str
+        """:type : str"""
+        self.Username = str
+        """:type : str"""
+        self.Created = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyShortInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Alias = str
+        """:type : str"""
+        self.State = str
+        """:type : str"""
+        self.Type = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class Group(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Role = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class Topology(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Name = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class Resource(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Path = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class DomainInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Archived  = str
+        """:type : str"""
+        self.TopologiesFolder = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        self.Topologies = {'list': Topology}
+        """:type : list[Topology]"""
+        self.Resources = {'list': Resource}
+        """:type : list[Resource]"""
+        self.Groups = {'list': Group}
+        """:type : list[Group]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ResourceAttribute(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Type = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Value = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class Domain(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Name = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class Connections(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.FullPath = str
+        """:type : str"""
+        self.Weight = int
+        """:type : int"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ResourceInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ResourceLiveStatusDescription = str
+        """:type : str"""
+        self.Locked = bool
+        """:type : bool"""
+        self.Name = str
+        """:type : str"""
+        self.UniqeIdentifier = str
+        """:type : str"""
+        self.Permission = str
+        """:type : str"""
+        self.FullAddress = str
+        """:type : str"""
+        self.ResourceLiveStatusName = str
+        """:type : str"""
+        self.ResourceFamilyName = str
+        """:type : str"""
+        self.Connections = Connections
+        """:type : Connections"""
+        self.RootAddress = str
+        """:type : str"""
+        self.DriverName = str
+        """:type : str"""
+        self.Excluded = bool
+        """:type : bool"""
+        self.Address = str
+        """:type : str"""
+        self.FolderFullPath = str
+        """:type : str"""
+        self.LockInfo = ResourceLockInfo
+        """:type : ResourceLockInfo"""
+        self.ResourceModelName = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        self.Domains = {'list': Domain}
+        """:type : list[Domain]"""
+        self.ChildResources = {'list': object}
+        """:type : list[object]"""
+        self.ResourceAttributes = {'list': ResourceAttribute}
+        """:type : list[ResourceAttribute]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ResourceLiveStatusInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.liveStatusName = str
+        """:type : str"""
+        self.liveStatusDescription = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReservationLiveStatusInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ReservationLiveStatuses = {'list': ReservationLiveStatus}
+        """:type : list[ReservationLiveStatus]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReservationLiveStatus(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ReservationLiveStatusDescription = str
+        """:type : str"""
+        self.ReservationId = str
+        """:type : str"""
+        self.ReservationLiveStatusName = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class EndPointConnectionInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Routes = {'list': RouteInfo}
+        """:type : list[RouteInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class VisualConnectorsInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Connectors = {'list': Connector}
+        """:type : list[Connector]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyResourceInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Locked = bool
+        """:type : bool"""
+        self.Name = str
+        """:type : str"""
+        self.FullAddress = str
+        """:type : str"""
+        self.ResourceFamilyName = str
+        """:type : str"""
+        self.Connections = Connections
+        """:type : Connections"""
+        self.Alias = str
+        """:type : str"""
+        self.RootAddress = str
+        """:type : str"""
+        self.Excluded = bool
+        """:type : bool"""
+        self.Address = str
+        """:type : str"""
+        self.FolderFullPath = str
+        """:type : str"""
+        self.LockInfo = ResourceLockInfo
+        """:type : ResourceLockInfo"""
+        self.ResourceModelName = str
+        """:type : str"""
+        self.WillBeLocked = bool
+        """:type : bool"""
+        self.ResourceAttributes = {'list': ResourceAttribute}
+        """:type : list[ResourceAttribute]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ActiveTopologyResourceInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Locked = bool
+        """:type : bool"""
+        self.Name = str
+        """:type : str"""
+        self.FullAddress = str
+        """:type : str"""
+        self.ResourceFamilyName = str
+        """:type : str"""
+        self.Connections = Connections
+        """:type : Connections"""
+        self.Alias = str
+        """:type : str"""
+        self.RootAddress = str
+        """:type : str"""
+        self.Address = str
+        """:type : str"""
+        self.FolderFullPath = str
+        """:type : str"""
+        self.LockInfo = ResourceLockInfo
+        """:type : ResourceLockInfo"""
+        self.ResourceModelName = str
+        """:type : str"""
+        self.ResourceAttributes = {'list': ResourceAttribute}
+        """:type : list[ResourceAttribute]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class AbstractResourceAttribute(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Type = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Value = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class AbstractResourceRequiredAttribute(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Type = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Value = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyAbstractResourceInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.WillBeLocked = bool
+        """:type : bool"""
+        self.ResourceModelName = str
+        """:type : str"""
+        self.Alias = str
+        """:type : str"""
+        self.Valid = bool
+        """:type : bool"""
+        self.ResourceFamilyName = str
+        """:type : str"""
+        self.Quantity = int
+        """:type : int"""
+        self.Attributes = {'list': AbstractResourceAttribute}
+        """:type : list[AbstractResourceAttribute]"""
+        self.RequiredAttributes = {'list': AbstractResourceRequiredAttribute}
+        """:type : list[AbstractResourceRequiredAttribute]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class RouteSegmentInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Source = str
+        """:type : str"""
+        self.Target = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class RouteInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Target = str
+        """:type : str"""
+        self.Source = str
+        """:type : str"""
+        self.RouteConfiguration = RouteConfigurationInfo
+        """:type : RouteConfigurationInfo"""
+        self.Alias = str
+        """:type : str"""
+        self.Shared = bool
+        """:type : bool"""
+        self.IsTap = bool
+        """:type : bool"""
+        self.RouteType = str
+        """:type : str"""
+        self.Attributes = {'list': RouteAttributeInfo}
+        """:type : list[RouteAttributeInfo]"""
+        self.Segments = {'list': RouteSegmentInfo}
+        """:type : list[RouteSegmentInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class Connector(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Alias = str
+        """:type : str"""
+        self.Direction = str
+        """:type : str"""
+        self.Type = str
+        """:type : str"""
+        self.Target = str
+        """:type : str"""
+        self.Source = str
+        """:type : str"""
+        self.Attributes = {'list': AttributeValueInfo}
+        """:type : list[AttributeValueInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class RouteConfigurationInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Interface = long
+        """:type : long"""
+        self.Duplex = long
+        """:type : long"""
+        self.Speed = long
+        """:type : long"""
+        self.SpeedSetting = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class RouteAttributeInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.AttributeName = str
+        """:type : str"""
+        self.AttributeValue = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class CategoryListInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Categories = {'list': str}
+        """:type : list[str]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologiesByCategoryInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Topologies = {'list': str}
+        """:type : list[str]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class CategoriesOfTopologyInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Categories = {'list': TopologyCategoryInfo}
+        """:type : list[TopologyCategoryInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyCategoryInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Name = str
+        """:type : str"""
+        self.Value = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyInputsInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.DefaultValue = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        self.ParamName = str
+        """:type : str"""
+        self.PossibleValues = {'list': str}
+        """:type : list[str]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyGlobalInputsInfo(TopologyInputsInfo):
+    def __init__(self, xml_object, find_prefix):
+        TopologyInputsInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyAdditionalInfoInputsInfo(TopologyInputsInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ResourceName = str
+        """:type : str"""
+        self.LinkedToGlobal = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+        TopologyInputsInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyRequirementsInputsInfo(TopologyInputsInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ResourceName = str
+        """:type : str"""
+        self.LinkedToGlobal = str
+        """:type : str"""
+        self.InputType = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+        TopologyInputsInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Name = str
+        """:type : str"""
+        self.Driver = str
+        """:type : str"""
+        self.Alias = str
+        """:type : str"""
+        self.State = str
+        """:type : str"""
+        self.Owner = str
+        """:type : str"""
+        self.ParentTopology = TopologyShortInfo
+        """:type : TopologyShortInfo"""
+        self.Type = str
+        """:type : str"""
+        self.Instructions = str
+        """:type : str"""
+        self.AbstractResources = {'list': TopologyAbstractResourceInfo}
+        """:type : list[TopologyAbstractResourceInfo]"""
+        self.Services = {'list': ServiceInstance}
+        """:type : list[ServiceInstance]"""
+        self.Connectors = {'list': Connector}
+        """:type : list[Connector]"""
+        self.AdditionalInfoInputs = {'list': TopologyAdditionalInfoInputsInfo}
+        """:type : list[TopologyAdditionalInfoInputsInfo]"""
+        self.Routes = {'list': RouteInfo}
+        """:type : list[RouteInfo]"""
+        self.GlobalInputs = {'list': TopologyGlobalInputsInfo}
+        """:type : list[TopologyGlobalInputsInfo]"""
+        self.RequirementsInputs = {'list': TopologyRequirementsInputsInfo}
+        """:type : list[TopologyRequirementsInputsInfo]"""
+        self.Resources = {'list': TopologyResourceInfo}
+        """:type : list[TopologyResourceInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ActiveTopologyInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Username = str
+        """:type : str"""
+        self.MachineName = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Topology = str
+        """:type : str"""
+        self.Routes = {'list': RouteInfo}
+        """:type : list[RouteInfo]"""
+        self.Connectors = {'list': Connector}
+        """:type : list[Connector]"""
+        self.Resources = {'list': ActiveTopologyResourceInfo}
+        """:type : list[ActiveTopologyResourceInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyListInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Topologies = {'list': str}
+        """:type : list[str]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class AttributeValueInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Name = str
+        """:type : str"""
+        self.Value = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ResourceShortInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Locked = bool
+        """:type : bool"""
+        self.Name = str
+        """:type : str"""
+        self.Permission = str
+        """:type : str"""
+        self.FullAddress = str
+        """:type : str"""
+        self.ResourceFamilyName = str
+        """:type : str"""
+        self.RootAddress = str
+        """:type : str"""
+        self.Excluded = bool
+        """:type : bool"""
+        self.Address = str
+        """:type : str"""
+        self.FolderFullPath = str
+        """:type : str"""
+        self.LockInfo = ResourceLockInfo
+        """:type : ResourceLockInfo"""
+        self.ResourceModelName = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ResourceListInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Resources = {'list': ResourceShortInfo}
+        """:type : list[ResourceShortInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ServiceInstance(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Alias = str
+        """:type : str"""
+        self.ServiceName = str
+        """:type : str"""
+        self.Attributes = {'list': AttributeValueInfo}
+        """:type : list[AttributeValueInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ServiceAttribute(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.IsRequired = bool
+        """:type : bool"""
+        self.DefaultValue = str
+        """:type : str"""
+        self.Type = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.PossibleValues = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ServiceInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.CategoryFullPath = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        self.Attributes = {'list': ServiceAttribute}
+        """:type : list[ServiceAttribute]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ServicesListInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Services = {'list': ServiceInfo}
+        """:type : list[ServiceInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ContentShortInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Type = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Permission = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ContentListInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ContentArray = {'list': ContentShortInfo}
+        """:type : list[ContentShortInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReservationListInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Reservations = {'list': ReservationInfo}
+        """:type : list[ReservationInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReservationInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Owner = str
+        """:type : str"""
+        self.Created = str
+        """:type : str"""
+        self.Id = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.LockedResources = {'list': ResourceShortInfo}
+        """:type : list[ResourceShortInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class Mapping(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Source = str
+        """:type : str"""
+        self.Target = str
+        """:type : str"""
+        self.RouteType = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ResourceMappingsInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Mapping = Mapping
+        """:type : Mapping"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class CreateReservationResponseInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Reservation = ReservationShortInfo
+        """:type : ReservationShortInfo"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class GetReservationsInRangeResponseInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Reservations = {'list': ReservationShortInfo}
+        """:type : list[ReservationShortInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReservationShortInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Status = str
+        """:type : str"""
+        self.ReservationLiveStatusDescription = str
+        """:type : str"""
+        self.Booked = bool
+        """:type : bool"""
+        self.ProvisioningStatus = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        self.ReservationLiveStatusName = str
+        """:type : str"""
+        self.DomainName = str
+        """:type : str"""
+        self.CreateDate = str
+        """:type : str"""
+        self.ModificationDate = str
+        """:type : str"""
+        self.ActualEndTime = str
+        """:type : str"""
+        self.RecurrenceType = str
+        """:type : str"""
+        self.StartTime = str
+        """:type : str"""
+        self.Owner = str
+        """:type : str"""
+        self.EndTime = str
+        """:type : str"""
+        self.Id = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Topologies = {'list': str}
+        """:type : list[str]"""
+        self.PermittedUsers = {'list': str}
+        """:type : list[str]"""
+        self.TopologiesInfo = {'list': TopologyShortInfo}
+        """:type : list[TopologyShortInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReservationDiagramLayoutResponseInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ResourceDiagramLayouts = {'list': ResourceDiagramLayoutInfo}
+        """:type : list[ResourceDiagramLayoutInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ResourceDiagramLayoutInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Y = float
+        """:type : float"""
+        self.ResourceName = str
+        """:type : str"""
+        self.X = float
+        """:type : float"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class GetReservationDescriptionResponseInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ReservationDescription = ReservationDescriptionInfo
+        """:type : ReservationDescriptionInfo"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReservationDescriptionInfo(ReservationShortInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ReservationLiveStatus = ReservationLiveStatus
+        """:type : ReservationLiveStatus"""
+        self.TopologiesInstructionsInfo = {'list': TopologyInstructionsInfo}
+        """:type : list[TopologyInstructionsInfo]"""
+        self.TopologiesResourcesAttributeInfo = {'list': TopologiesResourcesAttributesInfo}
+        """:type : list[TopologiesResourcesAttributesInfo]"""
+        self.ActiveRoutesInfo = {'list': RouteInfo}
+        """:type : list[RouteInfo]"""
+        self.TopologiesReservedResources = {'list': TopologyReservedResourceInfo}
+        """:type : list[TopologyReservedResourceInfo]"""
+        self.Connectors = {'list': Connector}
+        """:type : list[Connector]"""
+        self.Services = {'list': ServiceInstance}
+        """:type : list[ServiceInstance]"""
+        self.Conflicts = {'list': ResourceConflictInfo}
+        """:type : list[ResourceConflictInfo]"""
+        self.RequestedRoutesInfo = {'list': RouteInfo}
+        """:type : list[RouteInfo]"""
+        self.Resources = {'list': ReservedResourceInfo}
+        """:type : list[ReservedResourceInfo]"""
+        self.TopologiesRouteInfo = {'list': TopologyRoutesInfo}
+        """:type : list[TopologyRoutesInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+        ReservationShortInfo.__init__(self, xml_object, find_prefix)
+
+class GetReservationInputsResponseInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.GlobalInputs = {'list': ReservedTopologyGlobalInputsInfo}
+        """:type : list[ReservedTopologyGlobalInputsInfo]"""
+        self.AdditionalInfoInputs = {'list': ReservedTopologyAdditionalInfoInputsInfo}
+        """:type : list[ReservedTopologyAdditionalInfoInputsInfo]"""
+        self.RequiredInputs = {'list': ReservedTopologyRequiredInputsInfo}
+        """:type : list[ReservedTopologyRequiredInputsInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReservedTopologyInputsInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Value = str
+        """:type : str"""
+        self.ParamName = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReservedTopologyGlobalInputsInfo(ReservedTopologyInputsInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.PossibleValues = {'list': str}
+        """:type : list[str]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+        ReservedTopologyInputsInfo.__init__(self, xml_object, find_prefix)
+
+class ReservedTopologyRequiredInputsInfo(ReservedTopologyInputsInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ResourceName = str
+        """:type : str"""
+        self.LinkedToGlobal = str
+        """:type : str"""
+        self.Type = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+        ReservedTopologyInputsInfo.__init__(self, xml_object, find_prefix)
+
+class ReservedTopologyAdditionalInfoInputsInfo(ReservedTopologyInputsInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ResourceName = str
+        """:type : str"""
+        self.LinkedToGlobal = str
+        """:type : str"""
+        self.PossibleValues = {'list': str}
+        """:type : list[str]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+        ReservedTopologyInputsInfo.__init__(self, xml_object, find_prefix)
+
+class TopologiesResourcesAttributesInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Usage = str
+        """:type : str"""
+        self.Alias = str
+        """:type : str"""
+        self.AttributeName = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.TopologyName = str
+        """:type : str"""
+        self.AttributeValue = {'list': str}
+        """:type : list[str]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReservedResourceInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Locked = bool
+        """:type : bool"""
+        self.Name = str
+        """:type : str"""
+        self.FullAddress = str
+        """:type : str"""
+        self.ResourceFamilyName = str
+        """:type : str"""
+        self.Released = bool
+        """:type : bool"""
+        self.FolderFullPath = str
+        """:type : str"""
+        self.Shared = bool
+        """:type : bool"""
+        self.ResourceModelName = str
+        """:type : str"""
+        self.Availability = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyRoutesInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.TopologyName = str
+        """:type : str"""
+        self.Routes = {'list': RouteInfo}
+        """:type : list[RouteInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyInstructionsInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.TopologyName = str
+        """:type : str"""
+        self.Instructions = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyReservedResourceInfo(ReservedResourceInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Alias = str
+        """:type : str"""
+        self.TopologyName = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+        ReservedResourceInfo.__init__(self, xml_object, find_prefix)
+
+class GetActiveReservationsResponseInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Reservations = {'list': ReservationShortInfo}
+        """:type : list[ReservationShortInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ResourceConflictInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ConflictWith = str
+        """:type : str"""
+        self.ConflictType = str
+        """:type : str"""
+        self.ConflictStarted = str
+        """:type : str"""
+        self.ResourceName = str
+        """:type : str"""
+        self.ConflictWithUser = str
+        """:type : str"""
+        self.ConflictPlannedEndTime = str
+        """:type : str"""
+        self.Topology = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReserveResourcesResponseInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Conflicts = {'list': ResourceConflictInfo}
+        """:type : list[ResourceConflictInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ReserveTopologyResponseInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Conflicts = {'list': ResourceConflictInfo}
+        """:type : list[ResourceConflictInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class CommandExecutionIdResponseInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Id = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class CommandExecutionResultInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        pass
+
+class CommandExecutionResultListInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Results = {'list': CommandExecutionResultInfo}
+        """:type : list[CommandExecutionResultInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class CommandExecutionCompletedResultInfo(CommandExecutionResultInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Output = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+        CommandExecutionResultInfo.__init__(self, xml_object, find_prefix)
+
+class CommandExecutionCancelledResultInfo(CommandExecutionResultInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Message = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+        CommandExecutionResultInfo.__init__(self, xml_object, find_prefix)
+
+class CommandExecutionFailedResultInfo(CommandExecutionResultInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ErrorDescription = str
+        """:type : str"""
+        self.ErrorName = str
+        """:type : str"""
+        self.ErrorParameters = {'list': ErrorParameter}
+        """:type : list[ErrorParameter]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+        CommandExecutionResultInfo.__init__(self, xml_object, find_prefix)
+
+class ErrorParameter(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Name = str
+        """:type : str"""
+        self.Value = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class LogonDomainInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.DomainId = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class LogonResponseInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Domain = LogonDomainInfo
+        """:type : LogonDomainInfo"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class CommandParameter(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Mandatory = bool
+        """:type : bool"""
+        self.Name = str
+        """:type : str"""
+        self.DefaultValue = str
+        """:type : str"""
+        self.EnumValues = str
+        """:type : str"""
+        self.Type = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ResourceCommandInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Tag = str
+        """:type : str"""
+        self.DisplayName = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        self.Parameters = {'list': CommandParameter}
+        """:type : list[CommandParameter]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ResourceCommandListInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Commands = {'list': ResourceCommandInfo}
+        """:type : list[ResourceCommandInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyCommandInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Name = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        self.Parameters = {'list': CommandParameter}
+        """:type : list[CommandParameter]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyCommandListInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Commands = {'list': TopologyCommandInfo}
+        """:type : list[TopologyCommandInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class FindResourceReservationInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ResourceFullName = str
+        """:type : str"""
+        self.ReservationName = str
+        """:type : str"""
+        self.ReservationId = str
+        """:type : str"""
+        self.StartTime = str
+        """:type : str"""
+        self.Owner = str
+        """:type : str"""
+        self.Shared = bool
+        """:type : bool"""
+        self.EndTime = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ResourcesUsageSummaryInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.NumOfNotInReservation = int
+        """:type : int"""
+        self.NumOfShared = int
+        """:type : int"""
+        self.NumOfReserved = int
+        """:type : int"""
+        self.ResourceFullName = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class FindResourceInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ReservedStatus = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        self.UsageSummary = ResourcesUsageSummaryInfo
+        """:type : ResourcesUsageSummaryInfo"""
+        self.FullAddress = str
+        """:type : str"""
+        self.Permission = str
+        """:type : str"""
+        self.ConnectedTo = str
+        """:type : str"""
+        self.ResourceFamilyName = str
+        """:type : str"""
+        self.Excluded = bool
+        """:type : bool"""
+        self.Address = str
+        """:type : str"""
+        self.FullName = str
+        """:type : str"""
+        self.ResourceModelName = str
+        """:type : str"""
+        self.FullPath = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Reservations = {'list': FindResourceReservationInfo}
+        """:type : list[FindResourceReservationInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class FindResourceListInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Resources = {'list': FindResourceInfo}
+        """:type : list[FindResourceInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class GetReservationRemainingTimeInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.RemainingTimeInMinutes = float
+        """:type : float"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class UsersInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Users = {'list': UserInfo}
+        """:type : list[UserInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class UserInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.IsDomainAdmin = bool
+        """:type : bool"""
+        self.Name = str
+        """:type : str"""
+        self.DomainName = str
+        """:type : str"""
+        self.IsAdmin = bool
+        """:type : bool"""
+        self.Email = str
+        """:type : str"""
+        self.IsActive = bool
+        """:type : bool"""
+        self.Groups = {'list': GroupInfo}
+        """:type : list[GroupInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class GroupsInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Groups = {'list': GroupInfo}
+        """:type : list[GroupInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TestShellDomainInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Id = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class GroupInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.GroupRole = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        self.TestShellDomains = {'list': TestShellDomainInfo}
+        """:type : list[TestShellDomainInfo]"""
+        self.Users = {'list': UserInfo}
+        """:type : list[UserInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class UtilizationReport(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.UtilizationReportRows = {'list': UtilizationReportRow}
+        """:type : list[UtilizationReportRow]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class UtilizationReportRow(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Model = str
+        """:type : str"""
+        self.ParentId = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Family = str
+        """:type : str"""
+        self.Utilization = float
+        """:type : float"""
+        self.Children = {'list': object}
+        """:type : list[object]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ServerTimeInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ServerDateTime = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ExportConfigurationInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Configuration = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class GetServerTimeZonesResponse(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.TimeZones = {'list': TimeZoneDefinition}
+        """:type : list[TimeZoneDefinition]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TimeZoneDefinition(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.DisplayName = str
+        """:type : str"""
+        self.Id = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class AbstractTemplateShortInfoList(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.AbstractTemplates = {'list': AbstractTemplateShortInfo}
+        """:type : list[AbstractTemplateShortInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class AbstractTemplateShortInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Description = str
+        """:type : str"""
+        self.DomainName = str
+        """:type : str"""
+        self.CreateDate = str
+        """:type : str"""
+        self.ResourceModelName = str
+        """:type : str"""
+        self.Valid = bool
+        """:type : bool"""
+        self.Owner = str
+        """:type : str"""
+        self.ResourceFamilyName = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
 class CloudShellAPISession(CommonAPISession):
     def __init__(self, host, username='', password='', domain='', timezone='UTC', datetimeformat='MM/dd/yyyy HH:mm',
                  port=8029, uri='/ResourceManagerApiService/'):
