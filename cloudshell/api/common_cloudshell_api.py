@@ -188,11 +188,11 @@ class CommonApiResult:
         error_code_node = XMLWrapper.getChildNode(xml_object, 'ErrorCode')
         self.error_code = None if error_code_node is None else XMLWrapper.getNodeText(error_code_node)
 
-        find_prefix = XMLWrapper.getNodePrefix(xml_object, 'xsi')
-
         self.response_info = None
         response_info_node = XMLWrapper.getChildNode(xml_object, 'ResponseInfo')
+
         if response_info_node is not None:
+            find_prefix = XMLWrapper.getNodePrefix(response_info_node, 'xsi')
             type_attr = XMLWrapper.getNodeAttr(response_info_node, find_prefix + 'type')
             if not type_attr is None:
                 response_class = CommonApiResult.importAPIClass(type_attr)
