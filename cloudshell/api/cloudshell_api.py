@@ -10,15 +10,6 @@ from common_cloudshell_api import CommonAPIRequest
 
 from collections import OrderedDict
 
-class DeployAppInput(CommonAPIRequest):
-    def __init__(self, AppName, Name, Value):
-        """
-            :param str AppName: constructor parameter
-            :param str Name: constructor parameter
-            :param str Value: constructor parameter
-        """
-        CommonAPIRequest.__init__(self, AppName=AppName, Name=Name, Value=Value)
-
 class InputNameValue(CommonAPIRequest):
     def __init__(self, Name, Value):
         """
@@ -91,6 +82,91 @@ class ResourceInfoDto(CommonAPIRequest):
             :param str Description: constructor parameter
         """
         CommonAPIRequest.__init__(self, Family=Family, Model=Model, FullName=FullName, Address=Address, FolderFullpath=FolderFullpath, ParentFullName=ParentFullName, Description=Description)
+
+class DeployAppInput(CommonAPIRequest):
+    def __init__(self, AppName, Name, Value):
+        """
+            :param str AppName: constructor parameter
+            :param str Name: constructor parameter
+            :param str Value: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, AppName=AppName, Name=Name, Value=Value)
+
+class ModelName(CommonAPIRequest):
+    def __init__(self, ):
+        """
+
+        """
+        CommonAPIRequest.__init__(self, )
+
+class Name(CommonAPIRequest):
+    def __init__(self, ):
+        """
+
+        """
+        CommonAPIRequest.__init__(self, )
+
+class Value(CommonAPIRequest):
+    def __init__(self, ):
+        """
+
+        """
+        CommonAPIRequest.__init__(self, )
+
+class Attributes(CommonAPIRequest):
+    def __init__(self, NameValuePair):
+        """
+            :param list[Value] NameValuePair: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, NameValuePair=NameValuePair)
+
+class Driver(CommonAPIRequest):
+    def __init__(self, ):
+        """
+
+        """
+        CommonAPIRequest.__init__(self, )
+
+class NameValuePair(CommonAPIRequest):
+    def __init__(self, Name, Value):
+        """
+            :param str Name: constructor parameter
+            :param str Value: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, Name=Name, Value=Value)
+
+class Deployment(CommonAPIRequest):
+    def __init__(self, Attributes):
+        """
+            :param list[NameValuePair] Attributes: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, Attributes=Attributes)
+
+class Inputs(CommonAPIRequest):
+    def __init__(self, ScriptInput):
+        """
+            :param list[Value] ScriptInput: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, ScriptInput=ScriptInput)
+
+class Installation(CommonAPIRequest):
+    def __init__(self, Attributes, Script):
+        """
+            :param list[NameValuePair] Attributes: constructor parameter
+            :param list[Inputs] Script: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, Attributes=Attributes, Script=Script)
+
+class ApiEditAppRequest(CommonAPIRequest):
+    def __init__(self, Name, NewName, Description, AppDetails, DefaultDeployment):
+        """
+            :param str Name: constructor parameter
+            :param str NewName: constructor parameter
+            :param str Description: constructor parameter
+            :param list[Driver] AppDetails: constructor parameter
+            :param list[Installation] DefaultDeployment: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, Name=Name, NewName=NewName, Description=Description, AppDetails=AppDetails, DefaultDeployment=DefaultDeployment)
 
 class PhysicalConnectionUpdateRequest(CommonAPIRequest):
     def __init__(self, ResourceAFullName, ResourceBFullName, ConnectionWeight):
@@ -223,7 +299,7 @@ class VmCustomParam(CommonResponseInfo):
         """:type : str"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
-class VmDetail(CommonResponseInfo):
+class ResourceInfoVmDetails(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
         self.UID = str
         """:type : str"""
@@ -267,8 +343,8 @@ class ResourceInfo(CommonResponseInfo):
         """:type : bool"""
         self.Name = str
         """:type : str"""
-        self.UniqeIdentifier = str
-        """:type : str"""
+        self.VmDetails = ResourceInfoVmDetails
+        """:type : ResourceInfoVmDetails"""
         self.Permission = str
         """:type : str"""
         self.FullAddress = str
@@ -291,6 +367,8 @@ class ResourceInfo(CommonResponseInfo):
         """:type : ResourceLockInfo"""
         self.ResourceModelName = str
         """:type : str"""
+        self.UniqeIdentifier = str
+        """:type : str"""
         self.Description = str
         """:type : str"""
         self.Domains = {'list': Domain}
@@ -301,8 +379,6 @@ class ResourceInfo(CommonResponseInfo):
         """:type : list[ResourceInfo]"""
         self.ResourceAttributes = {'list': ResourceAttribute}
         """:type : list[ResourceAttribute]"""
-        self.VmDetails = {'list': VmDetail}
-        """:type : list[VmDetail]"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
 class ResourceLiveStatusInfo(CommonResponseInfo):
@@ -477,19 +553,37 @@ class ReservationAppResource(CommonResponseInfo):
         """:type : LogicalResourceInfo"""
         self.Name = str
         """:type : str"""
+        self.Description = str
+        """:type : str"""
+        self.DeploymentPaths = {'list': DeploymentPathInfo}
+        """:type : list[DeploymentPathInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class TopologyAppResourceInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.LogicalResource = LogicalResourceInfo
+        """:type : LogicalResourceInfo"""
+        self.Name = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
+        self.DeploymentPaths = {'list': DeploymentPathInfo}
+        """:type : list[DeploymentPathInfo]"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
 class Connector(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
-        self.Alias = str
-        """:type : str"""
         self.Direction = str
-        """:type : str"""
-        self.Type = str
         """:type : str"""
         self.Target = str
         """:type : str"""
         self.Source = str
+        """:type : str"""
+        self.Alias = str
+        """:type : str"""
+        self.State = str
+        """:type : str"""
+        self.Type = str
         """:type : str"""
         self.Attributes = {'list': AttributeValueInfo}
         """:type : list[AttributeValueInfo]"""
@@ -499,8 +593,50 @@ class LogicalResourceInfo(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
         self.Model = str
         """:type : str"""
+        self.Driver = str
+        """:type : str"""
+        self.Description = str
+        """:type : str"""
         self.Family = str
         """:type : str"""
+        self.Attributes = {'list': AttributeValueInfo}
+        """:type : list[AttributeValueInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class DeploymentServiceInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Model = str
+        """:type : str"""
+        self.Driver = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Attributes = {'list': AttributeValueInfo}
+        """:type : list[AttributeValueInfo]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class DeploymentPathInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.InstallationService = AppInstallationInfo
+        """:type : AppInstallationInfo"""
+        self.IsDefault = bool
+        """:type : bool"""
+        self.DeploymentService = DeploymentServiceInfo
+        """:type : DeploymentServiceInfo"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class InstallationService(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Model = str
+        """:type : str"""
+        self.Driver = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.IsDefault = bool
+        """:type : bool"""
+        self.Attributes = {'list': AttributeValueInfo}
+        """:type : list[AttributeValueInfo]"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
 class RouteConfigurationInfo(CommonResponseInfo):
@@ -605,6 +741,8 @@ class TopologyInfo(CommonResponseInfo):
         """:type : str"""
         self.AbstractResources = {'list': TopologyAbstractResourceInfo}
         """:type : list[TopologyAbstractResourceInfo]"""
+        self.Apps = {'list': TopologyAppResourceInfo}
+        """:type : list[TopologyAppResourceInfo]"""
         self.Services = {'list': ServiceInstance}
         """:type : list[ServiceInstance]"""
         self.Connectors = {'list': Connector}
@@ -863,6 +1001,12 @@ class GetReservationDescriptionResponseInfo(CommonResponseInfo):
         """:type : ReservationDescriptionInfo"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
+class ReservationAppsResponseInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Apps = {'list': ReservationAppResource}
+        """:type : list[ReservationAppResource]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
 class ReservationDescriptionInfo(ReservationShortInfo):
     def __init__(self, xml_object, find_prefix):
         self.ReservationLiveStatus = ReservationLiveStatus
@@ -961,12 +1105,20 @@ class ReservedResourceInfo(CommonResponseInfo):
         """:type : bool"""
         self.Name = str
         """:type : str"""
+        self.VmDetails = ResourceInfoVmDetails
+        """:type : ResourceInfoVmDetails"""
+        self.CreatedInReservation = str
+        """:type : str"""
         self.FullAddress = str
+        """:type : str"""
+        self.CreatedInDomain = str
         """:type : str"""
         self.ResourceFamilyName = str
         """:type : str"""
         self.Released = bool
         """:type : bool"""
+        self.CreatedByUser = str
+        """:type : str"""
         self.FolderFullPath = str
         """:type : str"""
         self.Shared = bool
@@ -1411,14 +1563,16 @@ class AbstractTemplateShortInfo(CommonResponseInfo):
 
 class BulkAppDeploymentyResultItem(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
-        self.ErrorCode = int
-        """:type : int"""
         self.AppDeploymentyInfo = AppDeploymentyInfo
         """:type : AppDeploymentyInfo"""
-        self.AppName = str
-        """:type : str"""
+        self.AppInstallationInfo = AppInstallationInfo
+        """:type : AppInstallationInfo"""
         self.Success = bool
         """:type : bool"""
+        self.AppName = str
+        """:type : str"""
+        self.ErrorCode = int
+        """:type : int"""
         self.Error = str
         """:type : str"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
@@ -1441,6 +1595,30 @@ class AppDeploymentyInfo(CommonResponseInfo):
         """:type : list[AppVisualConnector]"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
+class AppInstallationInfo(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.ScriptCommandName = str
+        """:type : str"""
+        self.Model = str
+        """:type : str"""
+        self.Driver = str
+        """:type : str"""
+        self.Name = str
+        """:type : str"""
+        self.Attributes = {'list': AttributeValueInfo}
+        """:type : list[AttributeValueInfo]"""
+        self.ScriptInputs = {'list': ScriptInputValue}
+        """:type : list[ScriptInputValue]"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
+class ScriptInputValue(CommonResponseInfo):
+    def __init__(self, xml_object, find_prefix):
+        self.Name = str
+        """:type : str"""
+        self.Value = str
+        """:type : str"""
+        CommonResponseInfo.__init__(self, xml_object, find_prefix)
+
 class AppVisualConnector(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
         self.Alias = str
@@ -1461,16 +1639,10 @@ class NumericRange(CommonResponseInfo):
         """:type : int"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
-class VlanPoolRangeNumericInfo(CommonResponseInfo):
+class CheckoutFromPoolInfo(CommonResponseInfo):
     def __init__(self, xml_object, find_prefix):
-        self.VlanRange = NumericRange
-        """:type : NumericRange"""
-        CommonResponseInfo.__init__(self, xml_object, find_prefix)
-
-class VlanPoolSingleNumericInfo(CommonResponseInfo):
-    def __init__(self, xml_object, find_prefix):
-        self.VlanId = int
-        """:type : int"""
+        self.Items = {'list': str}
+        """:type : list[str]"""
         CommonResponseInfo.__init__(self, xml_object, find_prefix)
 
 class CloudShellAPISession(CommonAPISession):
@@ -1498,7 +1670,7 @@ class CloudShellAPISession(CommonAPISession):
             response_info = self.SecureLogon(token_id, domain)
 
         self.domain = response_info.Domain.DomainId
-        self.token_id = response_info.Token.Token
+        # self.token_id = response_info.Token.Token
 
     def _sendRequest(self, username, domain, operation, message):
         request_headers = self.headers.copy()
@@ -1511,7 +1683,6 @@ class CloudShellAPISession(CommonAPISession):
 
         return CommonAPISession._sendRequest(self, operation, message, request_headers)
 
-
     def UpdateDriver(self, driverName='', driverFileName=''):
         """
             Updating driver in cloudshell
@@ -1521,7 +1692,7 @@ class CloudShellAPISession(CommonAPISession):
             :param driverFileName: str
             :return: string
         """
-        driverFile = open(driverFileName,'rb').read()
+        driverFile = open(driverFileName, 'rb').read()
 
         return self.generateAPIRequest(OrderedDict([('method_name', 'UpdateDriver'), ('driverName', driverName), ('driverFile', base64.b64encode(driverFile)),
                                                     ('driverFileName', driverFileName)]))
@@ -2180,7 +2351,7 @@ class CloudShellAPISession(CommonAPISession):
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteServiceCommand'), ('reservationId', reservationId), ('serviceAlias', serviceAlias), ('commandName', commandName), ('parameterValues', parameterValues), ('printOutput', printOutput)]))
 
-    def ExecuteDeployAppCommand(self, reservationId='', appName='', commandInputs=[], printOutput=False):
+    def DeployAppToCloudProvider(self, reservationId='', appName='', commandInputs=[], printOutput=False):
         """
             Executes deploy command for the specified app driver.
 
@@ -2189,11 +2360,11 @@ class CloudShellAPISession(CommonAPISession):
             :param list[InputNameValue] commandInputs: Specify a matrix of input names and values required for executing the command.
             :param bool printOutput: Defines whether to print the command output in the reservation command output window.
 
-            :rtype: AppDeploymentyInfo
+            :rtype: str
         """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteDeployAppCommand'), ('reservationId', reservationId), ('appName', appName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
+        return self.generateAPIRequest(OrderedDict([('method_name', 'DeployAppToCloudProvider'), ('reservationId', reservationId), ('appName', appName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
 
-    def ExecuteDeployAppCommandBulk(self, reservationId='', appNames=[], commandInputs=[], printOutput=False):
+    def DeployAppToCloudProviderBulk(self, reservationId='', appNames=[], commandInputs=[], printOutput=False):
         """
             Executes deploy command for the specified apps.
 
@@ -2202,11 +2373,22 @@ class CloudShellAPISession(CommonAPISession):
             :param list[DeployAppInput] commandInputs: Specify a matrix of input names and values required for executing the command [appName, InputName, InputValue].
             :param bool printOutput: Defines whether to print the command output in the reservation command output window.
 
-            :rtype: BulkAppDeploymentyInfo
+            :rtype: str
         """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteDeployAppCommandBulk'), ('reservationId', reservationId), ('appNames', appNames), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
+        return self.generateAPIRequest(OrderedDict([('method_name', 'DeployAppToCloudProviderBulk'), ('reservationId', reservationId), ('appNames', appNames), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
 
-    def ExecuteInstallAppCommand(self, reservationId='', resourceName='', commandName='', commandInputs=[], printOutput=False):
+    def EditAppsInReservation(self, reservationId='', editAppsRequests=[]):
+        """
+            Edit apps in reservation
+
+            :param str reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param list[ApiEditAppRequest] editAppsRequests: edit app request
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'EditAppsInReservation'), ('reservationId', reservationId), ('editAppsRequests', CommonAPIRequest.toContainer(editAppsRequests))]))
+
+    def InstallApp(self, reservationId='', resourceName='', commandName='', commandInputs=[], printOutput=False):
         """
             Executes install command for the specified app driver or script.
 
@@ -2216,9 +2398,32 @@ class CloudShellAPISession(CommonAPISession):
             :param list[InputNameValue] commandInputs: Specify a matrix of input names and values required for executing the command.
             :param bool printOutput: Defines whether to print the command output in the reservation command output window.
 
-            :rtype: CommandExecutionCompletedResultInfo
+            :rtype: str
         """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'ExecuteInstallAppCommand'), ('reservationId', reservationId), ('resourceName', resourceName), ('commandName', commandName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
+        return self.generateAPIRequest(OrderedDict([('method_name', 'InstallApp'), ('reservationId', reservationId), ('resourceName', resourceName), ('commandName', commandName), ('commandInputs', CommonAPIRequest.toContainer(commandInputs)), ('printOutput', printOutput)]))
+
+    def CheckoutFromPool(self, selectionCriteriaJson=''):
+        """
+            Request to checkout an item from a pool.
+
+            :param str selectionCriteriaJson: Json string that represents a selection request for an item or multiple items from a pool.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'CheckoutFromPool'), ('selectionCriteriaJson', selectionCriteriaJson)]))
+
+    def ReleaseFromPool(self, values=[], poolId='', reservationId='', ownerId=''):
+        """
+            Request to release an item from a pool.
+
+            :param list[str] values: Values to release from the pool.
+            :param str poolId: The specific pool where to search for the values that you want to release.
+            :param str reservationId: Reservation id that is assoicated with the pool values. It can also be an empty string if the values are not associated with a reservation.
+            :param str ownerId: The owner of the pool values.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'ReleaseFromPool'), ('values', values), ('poolId', poolId), ('reservationId', reservationId), ('ownerId', ownerId)]))
 
     def EnqueueEnvironmentCommand(self, reservationId='', commandName='', commandInputs=[], printOutput=False):
         """
@@ -2714,50 +2919,6 @@ class CloudShellAPISession(CommonAPISession):
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'GetReservationServicesPositions'), ('reservationId', reservationId)]))
 
-    def GetVlanAutoSelectFirstNumericFromRange(self, poolId='', reservationId='', ownerId='', isolation='', start=0, end=0):
-        """
-            Request to get the first available numeric vlan from given range
-
-            :param str poolId: Specify the name of the vlan pool id.
-            :param str reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param str ownerId: Specify the owner id.
-            :param str isolation: Specify the requested isolation level for the requested vlan.
-            :param int start: Specify the requested vlan range start.
-            :param int end: Specify the requested vlan range end.
-
-            :rtype: VlanPoolSingleNumericInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetVlanAutoSelectFirstNumericFromRange'), ('poolId', poolId), ('reservationId', reservationId), ('ownerId', ownerId), ('isolation', isolation), ('start', start), ('end', end)]))
-
-    def GetVlanSpecificNumericRange(self, poolId='', reservationId='', ownerId='', isolation='', start=0, end=0):
-        """
-            Request to get the specific numeric vlan range
-
-            :param str poolId: Specify the name of the vlan pool id.
-            :param str reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param str ownerId: Specify the owner id.
-            :param str isolation: Specify the requested isolation level for the requested vlan.
-            :param int start: Specify the requested vlan range start.
-            :param int end: Specify the requested vlan range end.
-
-            :rtype: VlanPoolRangeNumericInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetVlanSpecificNumericRange'), ('poolId', poolId), ('reservationId', reservationId), ('ownerId', ownerId), ('isolation', isolation), ('start', start), ('end', end)]))
-
-    def GetVlanSpecificNumeric(self, poolId='', reservationId='', ownerId='', isolation='', specificValue=0):
-        """
-            Request to get a specific numeric vlan
-
-            :param str poolId: Specify the name of the vlan pool id.
-            :param str reservationId: Specify the string that represents the reservation’s unique identifier.
-            :param str ownerId: Specify the owner id.
-            :param str isolation: Specify the requested isolation level for the requested vlan.
-            :param int specificValue: Specify the requested vlan.
-
-            :rtype: VlanPoolSingleNumericInfo
-        """
-        return self.generateAPIRequest(OrderedDict([('method_name', 'GetVlanSpecificNumeric'), ('poolId', poolId), ('reservationId', reservationId), ('ownerId', ownerId), ('isolation', isolation), ('specificValue', specificValue)]))
-
     def IncludeResource(self, resourceFullPath=''):
         """
             Includes a specified resource.
@@ -3068,6 +3229,17 @@ class CloudShellAPISession(CommonAPISession):
             :rtype: str
         """
         return self.generateAPIRequest(OrderedDict([('method_name', 'RemoveAppFromReservation'), ('reservationId', reservationId), ('appName', appName)]))
+
+    def GetAppsDetailsInReservation(self, reservationId='', appNames=[]):
+        """
+            Retrieves information on the specified apps in the reservation.
+
+            :param str reservationId: Specify the string that represents the reservation’s unique identifier.
+            :param list[str] appNames: Specify the apps names.
+
+            :rtype: str
+        """
+        return self.generateAPIRequest(OrderedDict([('method_name', 'GetAppsDetailsInReservation'), ('reservationId', reservationId), ('appNames', appNames)]))
 
     def RemoveServicesFromReservation(self, reservationId='', services=[]):
         """
