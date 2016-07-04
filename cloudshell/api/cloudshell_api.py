@@ -26,6 +26,13 @@ class AttributeNameValue(CommonAPIRequest):
         """
         CommonAPIRequest.__init__(self, Name=Name, Value=Value)
 
+class AttributeNamesValues(CommonAPIRequest):
+    def __init__(self, AttributeNameValue):
+        """
+            :param list[Value] AttributeNameValue: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, AttributeNameValue=AttributeNameValue)
+
 class ResourceAttributesUpdateRequest(CommonAPIRequest):
     def __init__(self, ResourceFullName, AttributeNamesValues):
         """
@@ -92,41 +99,6 @@ class DeployAppInput(CommonAPIRequest):
         """
         CommonAPIRequest.__init__(self, AppName=AppName, Name=Name, Value=Value)
 
-class ModelName(CommonAPIRequest):
-    def __init__(self, ):
-        """
-
-        """
-        CommonAPIRequest.__init__(self, )
-
-class Name(CommonAPIRequest):
-    def __init__(self, ):
-        """
-
-        """
-        CommonAPIRequest.__init__(self, )
-
-class Value(CommonAPIRequest):
-    def __init__(self, ):
-        """
-
-        """
-        CommonAPIRequest.__init__(self, )
-
-class Attributes(CommonAPIRequest):
-    def __init__(self, NameValuePair):
-        """
-            :param list[Value] NameValuePair: constructor parameter
-        """
-        CommonAPIRequest.__init__(self, NameValuePair=NameValuePair)
-
-class Driver(CommonAPIRequest):
-    def __init__(self, ):
-        """
-
-        """
-        CommonAPIRequest.__init__(self, )
-
 class NameValuePair(CommonAPIRequest):
     def __init__(self, Name, Value):
         """
@@ -135,12 +107,36 @@ class NameValuePair(CommonAPIRequest):
         """
         CommonAPIRequest.__init__(self, Name=Name, Value=Value)
 
+class Attributes(CommonAPIRequest):
+    def __init__(self, NameValuePair):
+        """
+            :param list[Value] NameValuePair: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, NameValuePair=NameValuePair)
+
+class AppDetails(CommonAPIRequest):
+    def __init__(self, ModelName, Attributes, Driver):
+        """
+            :param str ModelName: constructor parameter
+            :param list[NameValuePair] Attributes: constructor parameter
+            :param str Driver: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, ModelName=ModelName, Attributes=Attributes, Driver=Driver)
+
 class Deployment(CommonAPIRequest):
     def __init__(self, Attributes):
         """
             :param list[NameValuePair] Attributes: constructor parameter
         """
         CommonAPIRequest.__init__(self, Attributes=Attributes)
+
+class ScriptInput(CommonAPIRequest):
+    def __init__(self, Name, Value):
+        """
+            :param str Name: constructor parameter
+            :param str Value: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, Name=Name, Value=Value)
 
 class Inputs(CommonAPIRequest):
     def __init__(self, ScriptInput):
@@ -149,6 +145,14 @@ class Inputs(CommonAPIRequest):
         """
         CommonAPIRequest.__init__(self, ScriptInput=ScriptInput)
 
+class Script(CommonAPIRequest):
+    def __init__(self, Name, Inputs):
+        """
+            :param str Name: constructor parameter
+            :param list[ScriptInput] Inputs: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, Name=Name, Inputs=Inputs)
+
 class Installation(CommonAPIRequest):
     def __init__(self, Attributes, Script):
         """
@@ -156,6 +160,15 @@ class Installation(CommonAPIRequest):
             :param list[Inputs] Script: constructor parameter
         """
         CommonAPIRequest.__init__(self, Attributes=Attributes, Script=Script)
+
+class DefaultDeployment(CommonAPIRequest):
+    def __init__(self, Name, Deployment, Installation):
+        """
+            :param str Name: constructor parameter
+            :param list[Attributes] Deployment: constructor parameter
+            :param list[Script] Installation: constructor parameter
+        """
+        CommonAPIRequest.__init__(self, Name=Name, Deployment=Deployment, Installation=Installation)
 
 class ApiEditAppRequest(CommonAPIRequest):
     def __init__(self, Name, NewName, Description, AppDetails, DefaultDeployment):
@@ -1670,7 +1683,7 @@ class CloudShellAPISession(CommonAPISession):
             response_info = self.SecureLogon(token_id, domain)
 
         self.domain = response_info.Domain.DomainId
-        # self.token_id = response_info.Token.Token
+        self.token_id = response_info.Token.Token
 
     def _sendRequest(self, username, domain, operation, message):
         request_headers = self.headers.copy()
@@ -1683,6 +1696,7 @@ class CloudShellAPISession(CommonAPISession):
 
         return CommonAPISession._sendRequest(self, operation, message, request_headers)
 
+
     def UpdateDriver(self, driverName='', driverFileName=''):
         """
             Updating driver in cloudshell
@@ -1692,7 +1706,7 @@ class CloudShellAPISession(CommonAPISession):
             :param driverFileName: str
             :return: string
         """
-        driverFile = open(driverFileName, 'rb').read()
+        driverFile = open(driverFileName,'rb').read()
 
         return self.generateAPIRequest(OrderedDict([('method_name', 'UpdateDriver'), ('driverName', driverName), ('driverFile', base64.b64encode(driverFile)),
                                                     ('driverFileName', driverFileName)]))
